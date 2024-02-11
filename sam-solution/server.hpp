@@ -21,7 +21,7 @@ class Server {
   sockaddr_in serverAddress;
   std::vector<int> clients;
 
-  mutable std::shared_timed_mutex clientsMutex;  // Shared timed mutex
+  mutable std::shared_timed_mutex clientsMutex;
 
   void handleClient(int clientSocket);
   void broadcastMessage(int sender, const std::string &message);

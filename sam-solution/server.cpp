@@ -75,6 +75,7 @@ void Server::acceptConnections() {
 }
 
 echoWave Server::decodeMessage(char *message) {
+  // Currently cannot receive incorrect message - but extra error handling would be beneficial.
   echoWave msg{};
   if (msg.ParseFromString(message)) {
     if (msg.has_request()) {
@@ -86,15 +87,14 @@ echoWave Server::decodeMessage(char *message) {
       return msg;
     } else {
       std::cerr << "Unknown Message Type received" << std::endl;
-      // Add decode error string
       return msg;
     }
   }
-  // Add decode error string
   return msg;
 }
 
 std::string Server::buildResponse(const echoWaveRequest &request) {
+  // Currently cannot receive incorrect message - but extra error handling would be beneficial.
   echoWave responseMsg{};
   // std::cout << "Building response " << std::endl;
 
