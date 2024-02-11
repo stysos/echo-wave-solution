@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+message echoWave {
+  oneof message {
+    echoWaveRequest request = 1;
+    echoWaveResponse response = 2;
+  }
+}
+
+message echoWaveRequest {
+    string wave = 1; // A given string which is sent to the server
+}
+
+message echoWaveResponse {
+    bool status = 1; // Boolean to indicate result, true is successsful and false means a error occured
+    string echo = 2; // If status is false this could be the error string, if status is true this should be the wave string from echoWaveRequest
+}
