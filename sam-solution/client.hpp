@@ -21,6 +21,8 @@ class Client {
   int clientSocket;
   sockaddr_in serverAddress;
 
+  std::string lastSent;
+
   std::mutex consoleMutex;
 
   void sendMessage();

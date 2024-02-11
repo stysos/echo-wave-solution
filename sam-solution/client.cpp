@@ -54,6 +54,8 @@ void Client::sendMessage() {
     send(clientSocket, compiledMessage.c_str(), compiledMessage.length(), 0);
   }
 
+  // Save sent for verification
+
   if (message == "exit") {
     close(clientSocket);
     std::exit(EXIT_SUCCESS);
@@ -62,11 +64,11 @@ void Client::sendMessage() {
 
 std::string Client::createMessage(std::string waveString) {
   echoWaveRequest request{};
+  lastSent = waveString;
   request.set_wave(waveString);
 
   echoWave msg{};
   msg.mutable_request()->CopyFrom(request);
-
   std::string serialisedMessage;
   msg.SerializeToString(&serialisedMessage);
 
@@ -114,6 +116,10 @@ void Client::receiveMessages() {
         echoWaveResponse response = received.response();
         std::cout << "  Response Status: " << response.status() << std::endl;
         std::cout << "  Response Echo: " << response.echo() << std::endl;
+
+        std::cout << "Correct response received: "
+                  << ((response.echo() == lastSent) ? "True" : "False")
+                  << std::endl;
 
       } else {
         std::cerr << "Unknown Message Type received" << std::endl;
